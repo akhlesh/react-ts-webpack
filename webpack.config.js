@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -11,14 +12,12 @@ module.exports = {
     },
     output: {
         filename: "[name].js",
-        path: __dirname + "/dist",
-        publicPath: '/assets/'
+        path: __dirname + "/dist"
     },
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
     devServer: {
-        contentBase: 'dist',
         hot: true, // enable HMR on the server
     },
     resolve: {
@@ -49,7 +48,12 @@ module.exports = {
 
     plugins: [
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            filename: './index.html',
+            inject: 'body'
+        })
     ],
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.
